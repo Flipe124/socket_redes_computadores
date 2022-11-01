@@ -26,9 +26,27 @@ public class Cliente {
 
             // Informa o status da conexão
             System.out.println("Conectado ao servidor " + s.getInetAddress() + ":" + s.getPort());
+
+            saida.println("E ai bro, servodor!");
+            saida.flush();
+
+
+            String resposta = entrada.readLine();
+            System.out.println("Servidor> " + resposta);
+
+            entrada.close();
+            saida.close();
+
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (s != null){
+                    s.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-
     }
 }

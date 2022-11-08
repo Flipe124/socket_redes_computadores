@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Cliente3 {
@@ -25,11 +26,36 @@ public class Cliente3 {
             clientThread.start();
 
             // LER ENTRADAS DOS USUÁRIOS ENQUANTO ESTÁ CONECTADO
-            while (){
+            // CLIENTE SE DESCONECTA AO DIGTAR "FIM"!
+            while (!mensagem.equals("Fim")){
+                // LEMOS O NOME DO CLIENTE (CASO AINDA NÃO ESTEJA SETADO)
+                // E DEPOIS LEMOS AS MENSAGENS QUE ELE QUER ENVIAR
+                if (nomeCliente == null){
+                    // LER O NOME DO CLIENTE
+                    System.out.println("Qual seu nome?");
+                    mensagem = scanner.nextLine();
+                    nomeCliente = mensagem;
+                    saida.println(mensagem);
+                } else {
+                    // LER A MENSAGEM QUE O CLIENTE QUER ENVIAR
+                    mensagem = scanner.nextLine();
+                    saida.println(nomeCliente + "> " + mensagem);
 
+                    if (mensagem.equals("Fim")){
+                        break;
+                    }
+                }
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+        } finally {
+            try {
+                if (socket != null){
+                    socket.close();
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         }
     }
 }

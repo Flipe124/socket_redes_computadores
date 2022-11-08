@@ -72,7 +72,7 @@ public class Cliente2 {
                     s.close();
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
